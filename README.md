@@ -10,4 +10,7 @@ Run each example with `odin run <example>/<filename>.odin`
 - Odin Language Server (OLS) users may also see highlighted errors, as each version redeclares `main`
 
 Examples:
-- Basic - creates an OpenGL window with a green color, the `ESCAPE` key will close the window
+- Basic
+	- creates an OpenGL window with a green color
+	- the `ESCAPE` key will close the window
+	- no error handling tho
