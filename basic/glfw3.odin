@@ -19,7 +19,7 @@ main :: proc() {
 
 	// glfw uses callbacks to handle input events
 	key_callback : glfw.KeyProc : proc "c" (window : glfw.WindowHandle, key, scancode, action, mods : c.int) {
-		if action == glfw.PRESS && key == glfw.KEY_ESCAPE {
+		if key == glfw.KEY_ESCAPE && action == glfw.PRESS {
 			glfw.SetWindowShouldClose(window, glfw.TRUE)
 		}
 	}
