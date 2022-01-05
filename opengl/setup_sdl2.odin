@@ -1,4 +1,4 @@
-package main
+package opengl_sdl2
 
 import "core:c"
 

@@ -1,4 +1,4 @@
-package main
+package opengl_glfw3
 
 import "core:c"
 
