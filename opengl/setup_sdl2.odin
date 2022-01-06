@@ -1,4 +1,4 @@
-package opengl_sdl2
+package opengl_setup_sdl2
 
 import "core:c"
 
