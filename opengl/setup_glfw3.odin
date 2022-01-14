@@ -28,9 +28,9 @@ main :: proc() {
 	// need to load opengl functions (using a handy glfw function)
 	OpenGL.load_up_to(3, 1, glfw.gl_set_proc_address)
 
-	// set a couple opengl options (like a nice green color)
+	// set a couple opengl options (like a nice blue color)
 	OpenGL.Viewport(0, 0, width, height)
-	OpenGL.ClearColor(0.2, 0.7, 0.3, 1.0)
+	OpenGL.ClearColor(0.21960784313725490196078431372549, 0.50980392156862745098039215686275, 0.82352941176470588235294117647059, 1.0)
 
 	for !glfw.WindowShouldClose(window) {
 		// poll all events currently recieved
