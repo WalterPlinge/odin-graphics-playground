@@ -1,0 +1,28 @@
+## General steps for setting up Vulkan
+
+- Create a window (needs to support vulkan)
+- Load initial vulkan functions
+- Create instance using required extensions
+- Load remaining vulkan functions
+- (Optional) Set up debug helpers
+- Create surface
+- Select physical device and its queue families
+- Create logical device and queues
+- Create swapchain and image views (for the framebuffers)
+- Create render pass state (for pipeline and framebuffers)
+- Create pipeline. This involves state like:
+	- Shaders
+	- Vertex input
+	- Assembly
+	- Viewport
+	- Rasteriser
+	- Multisampling
+	- Colour blending
+- Create framebuffers for the render pass to use
+- Create command pool and buffers for drawing
+- (Optional) Set up semaphores and fences for syncronisation
+- MAIN LOOP:
+	- Wait for fences
+	- Acquire next image
+	- Submit commands to graphics queue
+	- Present swapchain image
