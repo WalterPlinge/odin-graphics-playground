@@ -32,3 +32,18 @@
 	- Bind the VAO so OpenGL knows what to draw
 	- Draw the VAO
 
+
+
+## General steps for creating a shader to use when drawing
+
+- Load the shader code for each stage of the pipeline
+	- Vertex shader is required
+	- Tessellation, Geometry, and Fragment shaders are optional
+- Create shaders for each type
+- Point the shaders to the source code
+- Compile the shaders
+- Create a program
+- Attach shaders
+- Link program
+- Then in the render loop:
+	- Use program before drawing
