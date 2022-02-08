@@ -101,7 +101,7 @@ void main() {
 
 		gl.Clear(gl.COLOR_BUFFER_BIT)
 
-		// Make sure the vertex array object is bound so opengl knows what to draw
+		// Make sure the program is being used so opengl knows how to draw
 		gl.DrawArrays(gl.TRIANGLES, 0, cast(i32) len(vertices))
 
 		sdl.GL_SwapWindow(window)
