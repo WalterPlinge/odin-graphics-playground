@@ -2,7 +2,7 @@ package opengl_setup_glfw3
 
 import "core:c"
 
-import "vendor:OpenGL"
+import gl "vendor:OpenGL"
 import "vendor:glfw"
 
 main :: proc() {
@@ -26,11 +26,11 @@ main :: proc() {
 	glfw.SetKeyCallback(window, key_callback)
 
 	// need to load opengl functions (using a handy glfw function)
-	OpenGL.load_up_to(3, 1, glfw.gl_set_proc_address)
+	gl.load_up_to(3, 3, glfw.gl_set_proc_address)
 
 	// set a couple opengl options (like a nice blue color)
-	OpenGL.Viewport(0, 0, width, height)
-	OpenGL.ClearColor(0.21960784313725490196078431372549, 0.50980392156862745098039215686275, 0.82352941176470588235294117647059, 1.0)
+	gl.Viewport(0, 0, width, height)
+	gl.ClearColor(0.21960784313725490196078431372549, 0.50980392156862745098039215686275, 0.82352941176470588235294117647059, 1.0)
 
 	for !glfw.WindowShouldClose(window) {
 		// poll all events currently recieved
@@ -38,7 +38,7 @@ main :: proc() {
 		// we could also call WaitEvents() if we only need to update after an event
 
 		// now we clear the buffer
-		OpenGL.Clear(OpenGL.COLOR_BUFFER_BIT)
+		gl.Clear(gl.COLOR_BUFFER_BIT)
 
 		// any rendering would go here
 
