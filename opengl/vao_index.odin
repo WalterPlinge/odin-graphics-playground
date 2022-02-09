@@ -82,7 +82,12 @@ main :: proc() {
 		gl.Clear(gl.COLOR_BUFFER_BIT)
 
 		// we use the DrawElements function to tell it what type the indices are, and which position to start
-		gl.DrawElements(gl.TRIANGLES, cast(i32)len(indices), gl.UNSIGNED_INT, rawptr(uintptr(0)))
+		gl.DrawElements(
+			gl.TRIANGLES,
+			cast(i32)len(indices),
+			gl.UNSIGNED_INT,
+			rawptr(uintptr(0)),
+		)
 
 		sdl.GL_SwapWindow(window)
 	}
