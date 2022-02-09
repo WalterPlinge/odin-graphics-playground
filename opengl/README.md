@@ -2,6 +2,7 @@
 
 - Setup - setting up OpenGL with SDL2 or GLFW3
 - VAO - setting up a vertex buffer to hold a rectangle
+- VAO Index - setting up a vertex buffer to be indexed when drawn
 - Shaders - setting up a shader program to colour a rectangle
 
 
@@ -30,7 +31,18 @@
 - Store the vertex data to be drawn in the VBO
 - Then in the render loop:
 	- Bind the VAO so OpenGL knows what to draw
-	- Draw the VAO
+	- Draw the VAO using glDrawArrays (or a variation)
+
+
+
+## General steps for using an index buffer to draw vertices
+
+- Generate a buffer for indices
+- Bind the buffer to GL_ELEMENT_ARRAY_BUFFER
+- Store the index data in the buffer
+- Then in the render loop:
+	- Bind the VAO
+	- Draw using glDrawElements (or a variation)
 
 
 
