@@ -159,31 +159,33 @@ main :: proc() {
 	})
 
 	// set up more debug stuff
-	debug_utils_messenger : vulkan.DebugUtilsMessengerEXT; defer vulkan.DestroyDebugUtilsMessengerEXT(instance, debug_utils_messenger, nil)
-	debug_report_callback : vulkan.DebugReportCallbackEXT; defer vulkan.DestroyDebugReportCallbackEXT(instance, debug_report_callback, nil)
-	{
-		debug_utils_messenger_info := default_debug_utils_messenger
-		vulkan.CreateDebugUtilsMessengerEXT(instance, &debug_utils_messenger_info, nil, &debug_utils_messenger)
+	when ODIN_DEBUG {
+		debug_utils_messenger : vulkan.DebugUtilsMessengerEXT; defer vulkan.DestroyDebugUtilsMessengerEXT(instance, debug_utils_messenger, nil)
+		debug_report_callback : vulkan.DebugReportCallbackEXT; defer vulkan.DestroyDebugReportCallbackEXT(instance, debug_report_callback, nil)
+		{
+			debug_utils_messenger_info := default_debug_utils_messenger
+			vulkan.CreateDebugUtilsMessengerEXT(instance, &debug_utils_messenger_info, nil, &debug_utils_messenger)
 
-		debug_report_info := vulkan.DebugReportCallbackCreateInfoEXT{
-			sType = .DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
-			flags = { .ERROR, .PERFORMANCE_WARNING, .WARNING },
-			pfnCallback = proc "system" (
-				flags: vulkan.DebugReportFlagsEXT,
-				objectType: vulkan.DebugReportObjectTypeEXT,
-				object: u64,
-				location: int,
-				messageCode: i32,
-				pLayerPrefix: cstring,
-				pMessage: cstring,
-				pUserData: rawptr,
-			) -> b32 {
-				context = runtime.default_context()
-				fmt.eprintln("DebugReportCallback:", pMessage)
-				return false
-			},
+			debug_report_info := vulkan.DebugReportCallbackCreateInfoEXT{
+				sType = .DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
+				flags = { .ERROR, .PERFORMANCE_WARNING, .WARNING },
+				pfnCallback = proc "system" (
+					flags: vulkan.DebugReportFlagsEXT,
+					objectType: vulkan.DebugReportObjectTypeEXT,
+					object: u64,
+					location: int,
+					messageCode: i32,
+					pLayerPrefix: cstring,
+					pMessage: cstring,
+					pUserData: rawptr,
+				) -> b32 {
+					context = runtime.default_context()
+					fmt.eprintln("DebugReportCallback:", pMessage)
+					return false
+				},
+			}
+			vulkan.CreateDebugReportCallbackEXT(instance, &debug_report_info, nil, &debug_report_callback)
 		}
-		vulkan.CreateDebugReportCallbackEXT(instance, &debug_report_info, nil, &debug_report_callback)
 	}
 
 	// this is the surface we can render to
