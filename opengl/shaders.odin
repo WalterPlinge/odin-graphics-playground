@@ -1,6 +1,7 @@
 package opengl_shaders
 
 import "core:c"
+import "core:fmt"
 
 import gl "vendor:OpenGL"
 import sdl "vendor:sdl2"
@@ -85,6 +86,24 @@ void main() {
 	// we need to tell opengl to use the program (this can be done during a frame when using multiple programs)
 	gl.UseProgram(shader_program)
 
+	// if you want to debug, you can get any error messages from compiling the shaders
+	// you can also debug the program by changing glGetShader* to glGetProgram*
+	debug_shader :: proc(shader: u32) {
+		log_length : c.int
+		gl.GetShaderiv(shader, gl.INFO_LOG_LENGTH, &log_length)
+		if log_length == 0 {
+			return
+		}
+		log := make([]byte, log_length); defer delete(log)
+		gl.GetShaderInfoLog(shader, log_length, &log_length, &log[0])
+		fmt.println(string(log))
+	}
+	debug_shader(vertex_shader)
+	debug_shader(fragment_shader)
+
+	// a side note, odin's vendor opengl library contains a helper function:
+	// `shader_program, shader_ok := gl.load_shaders_source(vertex_shader_code, fragment_shader_code)`
+	// which will accomplish the same thing, with error checking as well
 
 
 	running := true
