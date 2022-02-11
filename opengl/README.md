@@ -4,6 +4,7 @@
 - VAO - setting up a vertex buffer to hold a rectangle
 - VAO Index - setting up a vertex buffer to be indexed when drawn
 - Shaders - setting up a shader program to colour a rectangle
+- Uniforms - setting up a shader to pass in data as a uniform variable at runtime
 
 
 
@@ -59,3 +60,15 @@
 - Link program
 - Then in the render loop:
 	- Use program before drawing
+
+
+
+## General steps for passing a uniform variable to a shader
+
+- Get the location of the uniform
+- Set the value using one of many glUniform* functions
+	- Matrices will use glUniformMatrix*
+	- It will have the length (1, 2, 3, 4)
+	- It will have the type (i, u, f, d) for (int, unsigned int, float, doulbe) respectively
+	- The functions marked "v" take a pointer to the vector/matrix, rather than each value individually
+	- Example: glUniformMatrix4fv will allow you to set a matrix uniform of size 4x4 of type float
