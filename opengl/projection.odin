@@ -81,7 +81,6 @@ main :: proc() {
 layout (location = 0) in vec3 in_position;
 uniform mat4 projection;
 void main() {
-	mat4 tmvp = mat4(1.0);
 	gl_Position = projection * vec4(in_position, 1.0);
 }
 `
