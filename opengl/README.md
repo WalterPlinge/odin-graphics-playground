@@ -1,16 +1,16 @@
 ## Examples
 
-- Setup - setting up OpenGL with SDL2 or GLFW3
-- VAO - setting up a vertex buffer to hold a rectangle
-- VAO Index - setting up an index buffer to determine the draw order of the vertices
-- Shaders - setting up a shader program to colour a rectangle
-- Uniforms - passing variables to a shader uniform at runtime
-- Projection - setting up matrices for 3d
-- Normals - using normals for basic lighting
+1. Setup - setting up OpenGL with SDL2 or GLFW3
+2. VAO - setting up a vertex buffer to hold a rectangle
+3. VAO Index - setting up an index buffer to determine the draw order of the vertices
+4. Shaders - setting up a shader program to colour a rectangle
+5. Uniforms - passing variables to a shader uniform at runtime
+6. Projection - setting up matrices for 3d
+7. Normals - using normals for basic lighting
 
 
 
-## Setup: General steps for setting up OpenGL
+### 1 - Setup: General steps for setting up OpenGL
 
 - Create a window (needs to support OpenGL)
 - Create an OpenGL context on the window
@@ -23,7 +23,7 @@
 
 
 
-## VAO: General steps for drawing an array of vertices
+### 2 - VAO: General steps for drawing an array of vertices
 
 - Generate a Vertex Array Object (VAO)
 - Bind the VAO to modify
@@ -38,7 +38,7 @@
 
 
 
-## VAO Index: General steps for using an index buffer to draw vertices
+### 3 - VAO Index: General steps for using an index buffer to draw vertices
 
 - Generate a buffer for indices
 - Bind the buffer to `GL_ELEMENT_ARRAY_BUFFER`
@@ -49,7 +49,7 @@
 
 
 
-## Shaders: General steps for creating a shader to use when drawing
+### 4 - Shaders: General steps for creating a shader to use when drawing
 
 - Load the shader code for each stage of the pipeline
 	- Vertex shader is required
@@ -65,7 +65,7 @@
 
 
 
-## Uniforms: General steps for passing a variable to a shader uniform
+### 5 - Uniforms: General steps for passing a variable to a shader uniform
 
 - Get the location of the uniform
 - Set the value using one of many glUniform* functions
@@ -77,7 +77,7 @@
 
 
 
-## Projection: General steps for setting up matrices for 3d projection
+### 6 - Projection: General steps for setting up matrices for 3d projection
 
 - Projection matrix
 	- Changes a model from model space to screen space
@@ -95,7 +95,7 @@
 
 
 
-## Normals: using normals for basic lighting
+### 7 - Normals: using normals for basic lighting
 
 - Normals can be passed to shaders just like positions, using an attribute array
 - Normals can be stored in many ways
