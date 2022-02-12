@@ -6,6 +6,7 @@
 - Shaders - setting up a shader program to colour a rectangle
 - Uniforms - passing variables to a shader uniform at runtime
 - Projection - setting up matrices for 3d
+- Normals - using normals for basic lighting
 
 
 
@@ -91,3 +92,13 @@
 			- Changes the camera space to a box that can fit in screen space
 			- Odin has functions to help with this matrix (core:math.linalg.matrix4_perspective, core:math/linalg/glsl.mat4Perspective)
 - This is easily applied by passing this to a matrix uniform in the vertex shader
+
+
+
+## Normals: using normals for basic lighting
+
+- Normals can be passed to shaders just like positions, using an attribute array
+- Normals can be stored in many ways
+	- A separate buffer object
+	- The same buffer object, after the positions (looks like [P P P N N N], the example uses this one)
+	- The same buffer obejct, interleaved (looks like [P N P N P N], using `glVertexAttribPointer`'s `stride` parameter)
