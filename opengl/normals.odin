@@ -138,7 +138,6 @@ void main() {
 	}
 }
 
-//odinfmt: disable
 generate_cube :: proc() -> (cube: []f32, vertex_count: i32) {
 	@static vertex_data := []glsl.vec3{
 		{ 0.5,  0.5,  0.5},
@@ -179,4 +178,3 @@ generate_cube :: proc() -> (cube: []f32, vertex_count: i32) {
 	for _ , i in indices do append(&buffer, normal_data[i / 6].x, normal_data[i / 6].y, normal_data[i / 6].z)
 	return buffer[:], i32(len(indices))
 }
-//odinfmt: enable
