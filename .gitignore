@@ -1,5 +1,6 @@
-ols.json
+ols.json*
 *.dll
 *.exe
 *.pdb
+*.spv
 .vscode/
