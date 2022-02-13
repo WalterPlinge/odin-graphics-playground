@@ -1,8 +1,8 @@
 package opengl_perspective
 
 import "core:c"
-import "core:fmt"
 import "core:math/linalg/glsl"
+import "core:time"
 
 import gl "vendor:OpenGL"
 import sdl "vendor:sdl2"
@@ -113,8 +113,16 @@ void main() {
 
 
 
+	// also add a little time management for the rotation part
+	// I forgot if you just rotate a constant amount each frame and your framerate is uncapped
+	// the cube will rotate so fast it will become a blur
+	old_time := time.now()
+
 	running := true
 	for running {
+		delta_time := cast(f32) time.duration_seconds(time.diff(old_time, time.now()))
+		old_time = time.now()
+
 		event: sdl.Event
 		for sdl.PollEvent(&event) != 0 {
 			if event.type == .QUIT {
@@ -125,9 +133,9 @@ void main() {
 			}
 		}
 
-		// we can also rotate the cube 1 degree every frame for a little animation
+		// we can also rotate the cube 30 degree every second for a little animation
 		// we need to update the uniform every time we change it though
-		model = glsl.mat4Rotate({0, 0, 1}, glsl.radians(f32(1))) * model
+		model = glsl.mat4Rotate({0, 0, 1}, glsl.radians(30 * delta_time)) * model
 		gl.UniformMatrix4fv(gl.GetUniformLocation(shader, "model"), 1, false, &model[0, 0])
 
 		gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
