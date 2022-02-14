@@ -20,7 +20,6 @@ main :: proc() {
 	)
 	opengl_context := sdl.GL_CreateContext(window)
 	gl.load_up_to(3, 3, sdl.gl_set_proc_address)
-	gl.Enable(gl.DEPTH_TEST)
 	gl.Viewport(0, 0, width, height)
 	gl.ClearColor(
 		0.21960784313725490196078431372549,
@@ -30,6 +29,9 @@ main :: proc() {
 	)
 
 
+
+	// we should enable the depth test, so that we don't see any of the mesh that should be obscured
+	gl.Enable(gl.DEPTH_TEST)
 
 	// our cube is a list of positions, followed by normals
 	cube, vertex_count := generate_cube()
@@ -98,18 +100,8 @@ void main() {
 	view := glsl.mat4LookAt(eye = {2, 2, 2}, centre = {0, 0, 0}, up = {0, 0, 1})
 	gl.UniformMatrix4fv(gl.GetUniformLocation(shader, "view"), 1, false, &view[0, 0])
 
-	perspective := glsl.mat4Perspective(
-		fovy = glsl.radians(f32(60)),
-		aspect = f32(width) / f32(height),
-		near = 0.1,
-		far = 100,
-	)
-	gl.UniformMatrix4fv(
-		gl.GetUniformLocation(shader, "perspective"),
-		1,
-		false,
-		&perspective[0, 0],
-	)
+	perspective := glsl.mat4Perspective(glsl.radians(f32(60)), f32(width) / f32(height), 0.1, 100)
+	gl.UniformMatrix4fv(gl.GetUniformLocation(shader, "perspective"), 1, false, &perspective[0, 0])
 
 
 
@@ -133,7 +125,7 @@ void main() {
 			}
 		}
 
-		// we can also rotate the cube 30 degree every second for a little animation
+		// we can rotate the cube 30 degree every second for a little animation
 		// we need to update the uniform every time we change it though
 		model = glsl.mat4Rotate({0, 0, 1}, glsl.radians(30 * delta_time)) * model
 		gl.UniformMatrix4fv(gl.GetUniformLocation(shader, "model"), 1, false, &model[0, 0])
