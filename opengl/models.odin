@@ -167,10 +167,10 @@ load_model :: proc(filename: string) -> (mesh: []f32, mesh_size: i32) {
 	range := bounds[1] - bounds[0]
 	div := max(range.x, range.y, range.z)
 	for p in &positions {
-		// we move p to between 0 and 1, and then move it half so the centre point is [0,0,0]
-		p = (p - bounds[0]) / div - 0.5 * range / div
-		// then we can just multiply by 2 to get -1 to 1
-		p *= 2
+		// subtract the lower bound to move p between 0 and `div`
+		// multiply by 2 (so it's 2x range) so we can subtract the range and have it centered on the origin
+		// then divide to move p between -1 and 1
+		p = ((p - bounds[0]) * 2 - range) / div
 	}
 
 	// this will be the buffer we pass back, containing all the positions followed by all the normals
