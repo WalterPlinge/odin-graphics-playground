@@ -7,6 +7,7 @@
 - Uniforms - passing variables to a shader uniform at runtime
 - Projection - setting up matrices for 3d
 - Normals - using normals for basic lighting
+- Models - a simple obj loader to render simple meshes
 
 
 
@@ -104,3 +105,18 @@
 	- The same buffer obejct, interleaved (looks like [P N P N P N], using `glVertexAttribPointer`'s `stride` parameter)
 - You can multiply the colour by the angle between the normal and the direction of a light source
 	- This will provide the most basic shading to stop the flat look of the projection example
+
+
+
+## Models: General steps to loading a model
+
+- The way the cube is loaded in the normals example is essentially how any other mesh can be loaded
+- The `.obj` file format is one of many model formats that exist
+	- The simplest cases only require parsing positions and faces (normals and texture coordinates are optional but also simple)
+		- Loop through the file and store a list of all the positions and normals etc.
+		- Every face will have at least 3 indices referencing the positions/normals/etc.
+		- After parsing the file, loop through the indices and build a new list of the indexed positions/normals/etc.
+		- This new list is a format compatible with opengl
+			- It can be loaded to a VBO and accessed with attribute arrays
+	- This example only handles the basics to get the same information used in the normals example
+	- This example also scales the model down to fit within a 2x2x2 cube centered at the origin
