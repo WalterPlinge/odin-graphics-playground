@@ -74,7 +74,7 @@ void main() {
 	fragment_shader_code := `#version 330
 layout (location = 0) out vec4 out_colour;
 in vec4 normal;
-uniform vec4 colour;
+vec4 colour = vec4(0.82352941176470588235294117647059, 0.50980392156862745098039215686275, 0.21960784313725490196078431372549, 1.0);
 void main() {
 	vec3 sun_dir = normalize(vec3(2, 3, 5));
 	float angle = dot(normal.xyz, sun_dir);
@@ -86,21 +86,12 @@ void main() {
 	shader, _ := gl.load_shaders_source(vertex_shader_code, fragment_shader_code)
 	gl.UseProgram(shader)
 
-	colour := [4]f32{
-		0.82352941176470588235294117647059,
-		0.50980392156862745098039215686275,
-		0.21960784313725490196078431372549,
-		1.0,
-	}
-	gl.Uniform4fv(gl.GetUniformLocation(shader, "colour"), 1, &colour[0])
-
 	model := glsl.mat4(1.0)
-	gl.UniformMatrix4fv(gl.GetUniformLocation(shader, "model"), 1, false, &model[0, 0])
-
 	view := glsl.mat4LookAt(eye = {2, 2, 2}, centre = {0, 0, 0}, up = {0, 0, 1})
-	gl.UniformMatrix4fv(gl.GetUniformLocation(shader, "view"), 1, false, &view[0, 0])
-
 	perspective := glsl.mat4Perspective(glsl.radians(f32(60)), f32(width) / f32(height), 0.1, 100)
+
+	gl.UniformMatrix4fv(gl.GetUniformLocation(shader, "model"), 1, false, &model[0, 0])
+	gl.UniformMatrix4fv(gl.GetUniformLocation(shader, "view"), 1, false, &view[0, 0])
 	gl.UniformMatrix4fv(gl.GetUniformLocation(shader, "perspective"), 1, false, &perspective[0, 0])
 
 
@@ -173,10 +164,11 @@ generate_cube :: proc() -> (cube: []f32, vertex_count: i32) {
 		{ 0, 0,-1},
 	}
 
-	// fill buffer with positions then normals
+	// fill buffer with positions then normals, we won't use an indexed buffer this time
 	buffer: [dynamic]f32
 	for index in indices do append(&buffer, vertex_data[index].x, vertex_data[index].y, vertex_data[index].z)
 	for _ , i in indices do append(&buffer, normal_data[i / 6].x, normal_data[i / 6].y, normal_data[i / 6].z)
+
 	return buffer[:], i32(len(indices))
 }
 //odinfmt: enable
