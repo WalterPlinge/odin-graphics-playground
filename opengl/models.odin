@@ -2,9 +2,6 @@ package opengl_models
 
 import "core:c"
 import "core:math/linalg/glsl"
-
-import "core:fmt"
-import "core:mem"
 import "core:os"
 import "core:strconv"
 import "core:strings"
