@@ -1,4 +1,4 @@
-package opengl_perspective
+package opengl_projection
 
 import "core:c"
 import "core:math/linalg/glsl"
