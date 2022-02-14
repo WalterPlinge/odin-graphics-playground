@@ -3,4 +3,5 @@ ols.json*
 *.exe
 *.pdb
 *.spv
+*.sublime*
 .vscode/
