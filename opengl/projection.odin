@@ -29,14 +29,14 @@ main :: proc() {
 
 	// we have a cube
 	vertices := [][3]f32{
-		[3]f32{-0.5,  0.5,  0.5},
-		[3]f32{-0.5, -0.5,  0.5},
-		[3]f32{ 0.5, -0.5,  0.5},
-		[3]f32{ 0.5,  0.5,  0.5},
-		[3]f32{-0.5,  0.5, -0.5},
-		[3]f32{-0.5, -0.5, -0.5},
-		[3]f32{ 0.5, -0.5, -0.5},
-		[3]f32{ 0.5,  0.5, -0.5},
+		{-0.5,  0.5,  0.5},
+		{-0.5, -0.5,  0.5},
+		{ 0.5, -0.5,  0.5},
+		{ 0.5,  0.5,  0.5},
+		{-0.5,  0.5, -0.5},
+		{-0.5, -0.5, -0.5},
+		{ 0.5, -0.5, -0.5},
+		{ 0.5,  0.5, -0.5},
 	}
 	indices := []u8{
 		// 0 1 2 3 front
@@ -107,11 +107,18 @@ void main() {
 	// let's keep our cube in the centre of the world
 	model := glsl.mat4(1.0)
 
-	// we can move our camera diagonally though
-	view := glsl.mat4LookAt(eye = {2, 2, 2}, centre = {0, 0, 0}, up = {0, 0, 1})
+	// we can position our camera, and look towards a target, we also need to know what 'up' is
+	camera := glsl.vec3{2, 2, 2}
+	target := glsl.vec3{0, 0, 0}
+	up := glsl.vec3{0, 0, 1}
+	view := glsl.mat4LookAt(camera, target, up)
 
 	// and here's our camera's frustrum
-	perspective := glsl.mat4Perspective(fovy = glsl.radians(f32(60)), aspect = f32(width) / f32(height), near = 0.1, far = 100)
+	// we need our vertical field of view, the aspect ratio of the window, and the near and far planes
+	fovy := glsl.radians(f32(60))
+	aspect := f32(width) / f32(height)
+	near, far: f32 = 0.1, 100.0
+	perspective := glsl.mat4Perspective(fovy, aspect, near, far)
 
 	// now we can put them all together
 	projection := perspective * view * model
