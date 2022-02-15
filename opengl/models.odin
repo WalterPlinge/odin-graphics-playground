@@ -113,7 +113,6 @@ load_model :: proc(filename: string) -> (mesh: []f32, mesh_size: i32) {
 	// obj files are complicated, and they handle more than just a bunch of triangles
 	// so this will only be the most naive loader
 	data, _ := os.read_entire_file(filename); defer delete(data)
-	line_iterator := string(data)
 
 	// we're only going to read positions, normals, and faces right now
 	positions: [dynamic][3]f32; defer delete(positions)
@@ -124,6 +123,7 @@ load_model :: proc(filename: string) -> (mesh: []f32, mesh_size: i32) {
 	bounds := [2][3]f32{{max(f32), max(f32), max(f32)}, {min(f32), min(f32), min(f32)}}
 
 	// let's go
+	line_iterator := string(data)
 	for l in strings.split_lines_iterator(&line_iterator) {
 		// we can just skip if it's an empty line or a comment
 		if len(l) == 0 || l[0] == '#' do continue
