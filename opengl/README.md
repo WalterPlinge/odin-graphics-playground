@@ -8,6 +8,7 @@
 - Projection - setting up matrices for 3d
 - Normals - using normals for basic lighting
 - Models - a simple obj loader to render simple meshes
+- sRGB - a shader showing the difference between linear rgb and srgb
 
 
 
@@ -100,7 +101,7 @@
 
 - Normals can be passed to shaders just like positions, using an attribute array
 - Normals can be stored in many ways
-	- A separate buffer object
+	- A separate buffer object (buffers will look like [PPP] [NNN])
 	- The same buffer object, after the positions (looks like [P P P N N N], the example uses this one)
 	- The same buffer obejct, interleaved (looks like [P N P N P N], using `glVertexAttribPointer`'s `stride` parameter)
 - You can multiply the colour by the angle between the normal and the direction of a light source
