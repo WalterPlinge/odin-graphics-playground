@@ -67,7 +67,7 @@ load_file :: proc(filename: string) -> (mesh: []Vertex) {
 		}
 	}
 
-	// now we know the bounds of the model, we can normalise the positions to [-1, 1]
+	// (optional) now we know the bounds of the model, we can normalise the positions to [-1, 1]
 	range := bounds[1] - bounds[0]
 	div := max(range.x, range.y, range.z)
 	for v in &vertices {
