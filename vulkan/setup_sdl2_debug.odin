@@ -150,11 +150,11 @@ main :: proc() {
 		}
 	}
 
-	// we can load the rest of the functions (we pass the instance using context.user_data)
-	context.user_data = instance
+	// we can load the rest of the functions (we pass the instance using context.user_ptr)
+	context.user_ptr = &instance
 	vulkan.load_proc_addresses(proc(p: rawptr, name: cstring) {
 		fptr := cast(vulkan.ProcGetInstanceProcAddr) sdl2.Vulkan_GetVkGetInstanceProcAddr()
-		inst := context.user_data.(vulkan.Instance)
+		inst := (cast(^vulkan.Instance) context.user_ptr)^
 		(cast(^rawptr) p)^ = cast(rawptr) fptr(inst, name)
 	})
 
