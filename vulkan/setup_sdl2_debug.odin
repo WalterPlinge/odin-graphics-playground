@@ -37,7 +37,9 @@ main :: proc() {
 	// load vulkan procedures before we start using them (only the ones we can by using nil)
 	vk.GetInstanceProcAddr = cast(vk.ProcGetInstanceProcAddr) sdl.Vulkan_GetVkGetInstanceProcAddr()
 	vk.load_proc_addresses(proc(p: rawptr, name: cstring) {
-		(cast(^rawptr) p)^ = cast(rawptr) vk.GetInstanceProcAddr(nil, name)
+		fptr := vk.GetInstanceProcAddr(nil, name)
+		if fptr == nil do return
+		(cast(^rawptr) p)^ = cast(rawptr) fptr
 	})
 
 	// lets make a handy little default debug thingy
@@ -154,7 +156,9 @@ main :: proc() {
 	context.user_ptr = &instance
 	vk.load_proc_addresses(proc(p: rawptr, name: cstring) {
 		inst := (cast(^vk.Instance) context.user_ptr)^
-		(cast(^rawptr) p)^ = cast(rawptr) vk.GetInstanceProcAddr(inst, name)
+		fptr := vk.GetInstanceProcAddr(inst, name)
+		if fptr == nil do return
+		(cast(^rawptr) p)^ = cast(rawptr) fptr
 	})
 
 	// set up more debug stuff
@@ -361,6 +365,15 @@ main :: proc() {
 			return
 		}
 	}
+
+	// we can avoid extra overhead by loading device function pointers
+	context.user_ptr = &device
+	vk.load_proc_addresses(proc(p: rawptr, name: cstring) {
+		device := (cast(^vk.Device) context.user_ptr)^
+		fptr := vk.GetDeviceProcAddr(device, name)
+		if fptr != nil do return
+		(cast(^rawptr) p)^ = cast(rawptr) fptr
+	})
 
 	// lets get the swapchain working
 	surface_format : vk.SurfaceFormatKHR
