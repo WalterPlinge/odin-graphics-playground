@@ -787,7 +787,7 @@ main :: proc() {
 	for running {
 		// this is our event loop for input processing
 		event : sdl.Event
-		for sdl.PollEvent(&event) != 0 {
+		for sdl.PollEvent(&event) {
 			if event.type == .QUIT {
 				running = false
 			}
